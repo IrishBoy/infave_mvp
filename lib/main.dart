@@ -477,10 +477,6 @@ class _HomePageState extends State<HomePage> {
                 ]),
                 Row(children: <Widget>[
                   if (Platform.isAndroid) ...<Widget>[
-                    const Text(
-                      'Android-specific examples',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
                     Text('notifications enabled: $_notificationsEnabled'),
                     PaddedElevatedButton(
                       buttonText:
