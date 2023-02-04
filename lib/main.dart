@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 
+import "routeCalculate.dart";
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -21,6 +23,7 @@ import 'package:image/image.dart' as image;
 import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:directed_graph/directed_graph.dart';
 
 int id = 0;
 
@@ -268,7 +271,7 @@ class _HomePageState extends State<HomePage> {
   String? dropdownValue1;
   String? dropdownValue2;
 
-  List<String> stations = ["Station 1", "Station 2", "Station 3"];
+  List<String> stations = ["a", "b", "c", "d", "e", "f", "i", "k", 'l'];
 
   final TextEditingController _linuxIconPathController =
       TextEditingController();
@@ -468,27 +471,42 @@ class _HomePageState extends State<HomePage> {
                   ],
                   if (kIsWeb || !Platform.isLinux) ...<Widget>[
                     PaddedElevatedButton(
-                      buttonText: 'Старт (таймер 5 секунд)',
+                      buttonText: 'Старт',
                       onPressed: () async {
-                        await _zonedScheduleNotification(5, dropdownValue2);
+                        int time =
+                            CalculateRoute(dropdownValue1, dropdownValue2);
+                        if (time == -1) {
+                          await _showNotificationNotAllStations();
+                        } else {
+                          await _zonedScheduleNotification(
+                              time, dropdownValue2);
+                        }
                       },
                     ),
                   ],
                 ]),
-                Row(children: <Widget>[
+                Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                   if (Platform.isAndroid) ...<Widget>[
-                    Text('notifications enabled: $_notificationsEnabled'),
+                    Text('notifications: $_notificationsEnabled'),
+                  ]
+                ]),
+                Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  if (Platform.isAndroid) ...<Widget>[
                     PaddedElevatedButton(
                       buttonText:
                           'Check if notifications are enabled for this app',
                       onPressed: _areNotifcationsEnabledOnAndroid,
                     ),
-                    PaddedElevatedButton(
-                      buttonText: 'Request permission (API 33+)',
-                      onPressed: () => _requestPermissions(),
-                    )
                   ]
                 ]),
+                // Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                //   if (Platform.isAndroid) ...<Widget>[
+                //     PaddedElevatedButton(
+                //       buttonText: 'Request permission (API 33+)',
+                //       onPressed: () => _requestPermissions(),
+                //     )
+                //   ]
+                // ]),
                 // Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 //   PaddedElevatedButton(
                 //     buttonText: 'Отменить последний таймер',
@@ -502,6 +520,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       );
+
   Future<void> _showNotification() async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('your channel id', 'your channel name',
@@ -513,6 +532,20 @@ class _HomePageState extends State<HomePage> {
         NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
         id++, 'plain title', 'plain body', notificationDetails,
+        payload: 'item x');
+  }
+
+  Future<void> _showNotificationNotAllStations() async {
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('your channel id', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin.show(id++, 'Неполные данные',
+        'Выберите стартовую и конечную странцию маршрута', notificationDetails,
         payload: 'item x');
   }
 
