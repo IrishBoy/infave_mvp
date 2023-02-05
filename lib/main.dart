@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 
 import "routeCalculate.dart";
+import "vars.dart";
 
 import 'dart:async';
 import 'dart:convert';
@@ -271,7 +272,7 @@ class _HomePageState extends State<HomePage> {
   String? dropdownValue1;
   String? dropdownValue2;
 
-  List<String> stations = ["a", "b", "c", "d", "e", "f", "i", "k", 'l'];
+  // List<String> stations = ["a", "b", "c", "d", "e", "f", "i", "k", 'l'];
 
   final TextEditingController _linuxIconPathController =
       TextEditingController();
@@ -401,7 +402,7 @@ class _HomePageState extends State<HomePage> {
                       value: dropdownValue1,
                       iconSize: 24,
                       elevation: 16,
-                      style: TextStyle(color: Colors.deepPurple),
+                      style: const TextStyle(color: Colors.deepPurple),
                       underline: Container(
                         width: 15,
                         height: 2,
@@ -412,21 +413,21 @@ class _HomePageState extends State<HomePage> {
                           dropdownValue1 = newValue;
                         });
                       },
-                      hint: Text('Откуда'),
+                      hint: const Text('Откуда'),
                       items: stations
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                          .map<DropdownMenuItem<String>>(
+                              (String value) => DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  ))
+                          .toList(),
                     ),
-                    SizedBox(width: 40),
+                    const SizedBox(width: 40),
                     DropdownButton<String>(
                       value: dropdownValue2,
                       iconSize: 24,
                       elevation: 16,
-                      style: TextStyle(color: Colors.deepPurple),
+                      style: const TextStyle(color: Colors.deepPurple),
                       underline: Container(
                         width: 15,
                         height: 2,
@@ -437,14 +438,14 @@ class _HomePageState extends State<HomePage> {
                           dropdownValue2 = newValue;
                         });
                       },
-                      hint: Text('Куда'),
+                      hint: const Text('Куда'),
                       items: stations
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                          .map<DropdownMenuItem<String>>(
+                              (String value) => DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  ))
+                          .toList(),
                     )
                   ],
                 ),
@@ -631,211 +632,4 @@ class _InfoValueString extends StatelessWidget {
           ),
         ),
       );
-}
-
-Future<LinuxServerCapabilities> getLinuxCapabilities() =>
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            LinuxFlutterLocalNotificationsPlugin>()!
-        .getCapabilities();
-Future<void> _showLinuxNotificationWithBodyMarkup() async {
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification with body markup',
-    '<b>bold text</b>\n'
-        '<i>italic text</i>\n'
-        '<u>underline text</u>\n'
-        'https://example.com\n'
-        '<a href="https://example.com">example.com</a>',
-    null,
-  );
-}
-
-Future<void> _showLinuxNotificationWithCategory() async {
-  const LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    category: LinuxNotificationCategory.emailArrived,
-  );
-  const NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification with category',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationWithByteDataIcon() async {
-  final ByteData assetIcon = await rootBundle.load(
-    'icons/app_icon_density.png',
-  );
-  final image.Image? iconData = image.decodePng(
-    assetIcon.buffer.asUint8List().toList(),
-  );
-  final Uint8List iconBytes = iconData!.getBytes();
-  final LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    icon: ByteDataLinuxIcon(
-      LinuxRawIconData(
-        data: iconBytes,
-        width: iconData.width,
-        height: iconData.height,
-        channels: 4, // The icon has an alpha channel
-        hasAlpha: true,
-      ),
-    ),
-  );
-  final NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification with byte data icon',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationWithPathIcon(String path) async {
-  final LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(icon: FilePathLinuxIcon(path));
-  final NotificationDetails platformChannelSpecifics = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    0,
-    'notification with file path icon',
-    null,
-    platformChannelSpecifics,
-  );
-}
-
-Future<void> _showLinuxNotificationWithThemeIcon() async {
-  final LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    icon: ThemeLinuxIcon('media-eject'),
-  );
-  final NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification with theme icon',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationWithThemeSound() async {
-  final LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    sound: ThemeLinuxSound('message-new-email'),
-  );
-  final NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification with theme sound',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationWithCriticalUrgency() async {
-  const LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    urgency: LinuxNotificationUrgency.critical,
-  );
-  const NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification with critical urgency',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationWithTimeout() async {
-  final LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    timeout: LinuxNotificationTimeout.fromDuration(
-      const Duration(seconds: 1),
-    ),
-  );
-  final NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification with timeout',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationSuppressSound() async {
-  const LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    suppressSound: true,
-  );
-  const NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'suppress notification sound',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationTransient() async {
-  const LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    transient: true,
-  );
-  const NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'transient notification',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationResident() async {
-  const LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(
-    resident: true,
-  );
-  const NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'resident notification',
-    null,
-    notificationDetails,
-  );
-}
-
-Future<void> _showLinuxNotificationDifferentLocation() async {
-  const LinuxNotificationDetails linuxPlatformChannelSpecifics =
-      LinuxNotificationDetails(location: LinuxNotificationLocation(10, 10));
-  const NotificationDetails notificationDetails = NotificationDetails(
-    linux: linuxPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    'notification on different screen location',
-    null,
-    notificationDetails,
-  );
 }
