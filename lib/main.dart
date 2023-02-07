@@ -385,7 +385,7 @@ class _HomePageState extends State<HomePage> {
   // ignore: prefer_expression_function_bodies
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Infave Metro App'),
         ),
         body: Container(
           child: Center(
@@ -395,34 +395,36 @@ class _HomePageState extends State<HomePage> {
                 Row(mainAxisSize: MainAxisSize.min, children: const [
                   Text('Выберите начальную и конечную станции'),
                 ]),
+                Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  DropdownButton<String>(
+                    value: dropdownValue1,
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      width: 15,
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownValue1 = newValue;
+                      });
+                    },
+                    hint: const Text('Откуда'),
+                    items: stations
+                        .map<DropdownMenuItem<String>>(
+                            (String value) => DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                ))
+                        .toList(),
+                  ),
+                ]),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    DropdownButton<String>(
-                      value: dropdownValue1,
-                      iconSize: 24,
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        width: 15,
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue1 = newValue;
-                        });
-                      },
-                      hint: const Text('Откуда'),
-                      items: stations
-                          .map<DropdownMenuItem<String>>(
-                              (String value) => DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  ))
-                          .toList(),
-                    ),
-                    const SizedBox(width: 40),
+                    // const SizedBox(width: 40),
                     DropdownButton<String>(
                       value: dropdownValue2,
                       iconSize: 24,
