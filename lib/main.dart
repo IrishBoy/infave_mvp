@@ -488,20 +488,20 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ]),
-                Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  if (Platform.isAndroid) ...<Widget>[
-                    Text('notifications: $_notificationsEnabled'),
-                  ]
-                ]),
-                Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  if (Platform.isAndroid) ...<Widget>[
-                    PaddedElevatedButton(
-                      buttonText:
-                          'Check if notifications are enabled for this app',
-                      onPressed: _areNotifcationsEnabledOnAndroid,
-                    ),
-                  ]
-                ]),
+                // Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                //   if (Platform.isAndroid) ...<Widget>[
+                //     Text('notifications: $_notificationsEnabled'),
+                //   ]
+                // ]),
+                // Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                //   if (Platform.isAndroid) ...<Widget>[
+                //     PaddedElevatedButton(
+                //       buttonText:
+                //           'Check if notifications are enabled for this app',
+                //       onPressed: _areNotifcationsEnabledOnAndroid,
+                //     ),
+                //   ]
+                // ]),
                 // Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 //   if (Platform.isAndroid) ...<Widget>[
                 //     PaddedElevatedButton(
