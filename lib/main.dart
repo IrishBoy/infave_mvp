@@ -396,45 +396,41 @@ class _HomePageState extends State<HomePage> {
                   Text('Выберите начальную и конечную станции'),
                 ]),
                 Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  DropdownButton<String>(
-                    value: dropdownValue1,
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      width: 15,
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
+                  Expanded(
+                    child: DropdownButton<String>(
+                      // itemHeight: null,
+                      isExpanded: true,
+                      value: dropdownValue1,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue1 = newValue;
+                        });
+                      },
+                      hint: const Text('Откуда'),
+                      items: stations
+                          .map<DropdownMenuItem<String>>(
+                              (String value) => DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  ))
+                          .toList(),
                     ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue1 = newValue;
-                      });
-                    },
-                    hint: const Text('Откуда'),
-                    items: stations
-                        .map<DropdownMenuItem<String>>(
-                            (String value) => DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                ))
-                        .toList(),
-                  ),
+                  )
                 ]),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     // const SizedBox(width: 40),
-                    DropdownButton<String>(
+                    Expanded(
+                        child: DropdownButton<String>(
+                      // itemHeight: null,
+                      isExpanded: true,
+
                       value: dropdownValue2,
-                      iconSize: 24,
                       elevation: 16,
                       style: const TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        width: 15,
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownValue2 = newValue;
@@ -448,7 +444,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Text(value),
                                   ))
                           .toList(),
-                    )
+                    ))
                   ],
                 ),
                 Row(mainAxisSize: MainAxisSize.min, children: <Widget>[

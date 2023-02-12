@@ -225,7 +225,7 @@ packages:
     source: sdk
     version: "0.0.0"
   graphs:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: graphs
       sha256: f9e130f3259f52d26f0cfc0e964513796dafed572fa52e45d2f8d6ca14db39b2

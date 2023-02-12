@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dexterous.flutter_local_notifications_example">
    <application
-        android:label="flutter_local_notifications_example"
+        android:label="Infave"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
