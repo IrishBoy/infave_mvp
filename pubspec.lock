@@ -113,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  dijkstra:
+    dependency: "direct main"
+    description:
+      name: dijkstra
+      sha256: "139a383cafcefc49ccbc04c3cb04eba97740082af889c27b4977f0b144d4a1e2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   directed_graph:
     dependency: "direct main"
     description:

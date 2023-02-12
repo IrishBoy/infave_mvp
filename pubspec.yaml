@@ -17,6 +17,7 @@ dependencies:
   directed_graph: ^0.3.7
   flutter_launcher_icons: ^0.11.0
   graphs: ^2.2.0
+  dijkstra: ^0.0.3
 
 dev_dependencies:
   flutter_driver:

@@ -272,8 +272,6 @@ class _HomePageState extends State<HomePage> {
   String? dropdownValue1;
   String? dropdownValue2;
 
-  // List<String> stations = ["a", "b", "c", "d", "e", "f", "i", "k", 'l'];
-
   final TextEditingController _linuxIconPathController =
       TextEditingController();
 
@@ -398,7 +396,6 @@ class _HomePageState extends State<HomePage> {
                 Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                   Expanded(
                     child: DropdownButton<String>(
-                      // itemHeight: null,
                       isExpanded: true,
                       value: dropdownValue1,
                       elevation: 16,
@@ -422,12 +419,9 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    // const SizedBox(width: 40),
                     Expanded(
                         child: DropdownButton<String>(
-                      // itemHeight: null,
                       isExpanded: true,
-
                       value: dropdownValue2,
                       elevation: 16,
                       style: const TextStyle(color: Colors.deepPurple),
