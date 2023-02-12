@@ -555,7 +555,7 @@ class _HomePageState extends State<HomePage> {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Пора выходить',
-        'Стамнция $station',
+        'Станция $station',
         tz.TZDateTime.now(tz.local).add(Duration(seconds: timerDuration)),
         const NotificationDetails(
             android: AndroidNotificationDetails(
