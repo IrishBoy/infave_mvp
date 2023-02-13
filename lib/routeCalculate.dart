@@ -22,6 +22,6 @@ int CalculateRoute(String? startStation, String? endStation) {
   // final List<String> lightestPath =
   // graph.lightestPath(startStation, endStation);
 
-  return time;
+  return time - 15;
   // return graph.weightAlong(lightestPath);
 }
