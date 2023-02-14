@@ -60,9 +60,6 @@ class ReceivedNotification {
 
 String? selectedNotificationPayload;
 
-/// A notification action which triggers a url launch event
-const String urlLaunchActionId = 'id_1';
-
 /// A notification action which triggers a App navigation event
 const String navigationActionId = 'id_3';
 
@@ -390,6 +387,24 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Row(mainAxisSize: MainAxisSize.min, children: [
+                  Container(
+                      width: 200,
+                      child: const Text(
+                        '''Как пользоваться?''',
+                        style: TextStyle(height: 10, fontSize: 20),
+                      ))
+                ]),
+                Row(mainAxisSize: MainAxisSize.min, children: [
+                  Container(width: 300, child: const Text('''
+ Когда заходите в вагон указываете начальную и конечную станцию. После чего закрываете приложение,когда надо будет выходить на конечной станции - 
+                      вам прийдет уведомление''')),
+                ]),
+                Row(mainAxisSize: MainAxisSize.min, children: const [
+                  SizedBox(
+                    height: 30,
+                  )
+                ]),
                 Row(mainAxisSize: MainAxisSize.min, children: const [
                   Text('Выберите начальную и конечную станции'),
                 ]),
@@ -469,8 +484,12 @@ class _HomePageState extends State<HomePage> {
                         int time =
                             CalculateRoute(dropdownValue1, dropdownValue2);
                         if (time == -1) {
-                          await _showNotificationNotAllStations();
+                          await _showNotificationWithCustomText(
+                              'Неполные данные',
+                              'Выберите стартовую и конечную странцию маршрута');
                         } else {
+                          await _showNotificationWithCustomText('Путь начался',
+                              'Вы узнаете, когда надо будет выходить');
                           await _zonedScheduleNotification(
                               time, dropdownValue2);
                         }
@@ -478,6 +497,28 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ]),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    PaddedElevatedButton(
+                      buttonText: 'Отменить все пути',
+                      onPressed: () async {
+                        await _cancelAllNotifications();
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    PaddedElevatedButton(
+                      buttonText: 'Отменить последний путь',
+                      onPressed: () async {
+                        await _cancelNotification();
+                      },
+                    ),
+                  ],
+                )
                 // Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 //   if (Platform.isAndroid) ...<Widget>[
                 //     Text('notifications: $_notificationsEnabled'),
@@ -514,7 +555,8 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-  Future<void> _showNotification() async {
+  Future<void> _showNotificationWithCustomText(
+      String title, String body) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('your channel id', 'your channel name',
             channelDescription: 'your channel description',
@@ -523,24 +565,23 @@ class _HomePageState extends State<HomePage> {
             ticker: 'ticker');
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.show(
-        id++, 'plain title', 'plain body', notificationDetails,
-        payload: 'item x');
+    await flutterLocalNotificationsPlugin
+        .show(id++, title, body, notificationDetails, payload: 'item x');
   }
 
-  Future<void> _showNotificationNotAllStations() async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker');
-    const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.show(id++, 'Неполные данные',
-        'Выберите стартовую и конечную странцию маршрута', notificationDetails,
-        payload: 'item x');
-  }
+  // Future<void> _showNotificationNotAllStations() async {
+  //   const AndroidNotificationDetails androidNotificationDetails =
+  //       AndroidNotificationDetails('your channel id', 'your channel name',
+  //           channelDescription: 'your channel description',
+  //           importance: Importance.max,
+  //           priority: Priority.high,
+  //           ticker: 'ticker');
+  //   const NotificationDetails notificationDetails =
+  //       NotificationDetails(android: androidNotificationDetails);
+  //   await flutterLocalNotificationsPlugin.show(id++, 'Неполные данные',
+  //       'Выберите стартовую и конечную странцию маршрута', notificationDetails,
+  //       payload: 'item x');
+  // }
 
   Future<void> _cancelNotification() async {
     await flutterLocalNotificationsPlugin.cancel(--id);
